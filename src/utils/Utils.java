@@ -11,6 +11,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -218,6 +220,17 @@ public class Utils {
         String frase_final = "";
         frase_final = frase_general.substring(0, lugar-1) + frase;
         return frase_final;
+    }
+    
+    public static void Mostrar_linea_demanada (String ubicacio, int linea) throws IOException{
+        linea--;
+        String linea_demanada = Files.readAllLines(Paths.get(ubicacio)).get(linea);
+        System.out.println(linea_demanada);
+    }
+    
+    public static String Returnar_linea_demanada (String ubicacio, int linea) throws IOException{
+        String linea_demanada = Files.readAllLines(Paths.get(ubicacio)).get(linea);
+        return linea_demanada;
     }
 // </editor-fold>
 }

@@ -1,3 +1,2 @@
-1     Xavi                Cabezas                        16052003 Avinguda Xavito                          a21xavcabmil@inspedralbes.cat                                 
-Chavito
-d
+1     Xavi                Cabezas                       23062003Carrer de Cent                          xavicabezas@gmail.com         
+2     Arnau               Sole                          15042002Avinguda Europa                         arnausole@gmail.com           
