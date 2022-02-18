@@ -232,5 +232,18 @@ public class Utils {
         String linea_demanada = Files.readAllLines(Paths.get(ubicacio)).get(linea);
         return linea_demanada;
     }
+    
+    public static int Contador_lineas_ficher (String ubicacio) throws FileNotFoundException, IOException{
+        String frase = "";
+        int contador = 0;
+        FileReader fr = new FileReader(ubicacio);
+        BufferedReader br = new BufferedReader(fr);
+        while ((frase = br.readLine())!= null){
+            contador++;
+        }
+        fr.close();
+        br.close();
+        return contador;
+    }
 // </editor-fold>
 }

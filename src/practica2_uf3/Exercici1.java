@@ -93,4 +93,9 @@ public class Exercici1 {
         }
         return existeix;
     }
+    
+    public static void ConsultaPosicio (int posicio, String ubicacio, int contador_clients){
+        
+    }
+    
 }
