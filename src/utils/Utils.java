@@ -245,5 +245,20 @@ public class Utils {
         br.close();
         return contador;
     }
+    
+    public static void ModificarFicher(String ubicacio, String frase_per_cambiar, String frase_nova) throws FileNotFoundException{
+        File FicherNou = new File ("./clients_borrador.txt");
+        File FicherAntic = new File (ubicacio);/*
+        try {
+            if (FicherAntic.exists()) {
+                BufferedReader Flee = new BufferedReader(new FileReader(FicherAntic));
+                String linea;
+                while (linea = Flee.readLine()){
+            }
+        }
+        catch{
+            System.out.println(ex.getMessage());
+        }*/
+    }
 // </editor-fold>
 }

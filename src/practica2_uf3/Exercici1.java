@@ -21,7 +21,6 @@ public class Exercici1 {
      */
     public static void main(String[] args) throws IOException {
         Scanner scan = new Scanner(System.in);
-        int contador_clients = 0;
         String ubicacio = "./clients.txt";
         Utils.Mostrar_contenido_fichero(ubicacio);
         String client1 = "", client2 = "", client3 = "";
@@ -32,7 +31,7 @@ public class Exercici1 {
         client3 = FraseFinal(codi2, nom_client2, cognom_client2, naixament2, adreca2, email2);
         /*Utils.Escribir_fichero(client1, ubicacio);
         Utils.Escribir_fichero(client2, ubicacio);*/
-        contador_clients = 2;
+        int contador_clients = Utils.Contador_lineas_ficher(ubicacio);
         boolean existeix = ExisteixClient(ubicacio, client3, contador_clients);
         if (existeix){
             System.out.println("Es repeteix el client.");
@@ -41,6 +40,8 @@ public class Exercici1 {
             Utils.Escribir_fichero(client3, ubicacio);
         }
         Utils.Mostrar_contenido_fichero(ubicacio);
+        ConsultaPosicio(ubicacio);
+        ConsultaCodi(ubicacio);
     }
     
     public static String AfegirEspais(int tamanoMax, String missatge) {
@@ -68,25 +69,15 @@ public class Exercici1 {
         adreca = AfegirEspais(TAMANY_MAX_ADRECA, adreca);
         email = AfegirEspais(TAMANY_MAX_EMAIL, email);
         frase_result = codi + nom_client + cognom_client + naixament + adreca + email;
-        System.out.println(codi.length());
-        System.out.println(nom_client.length());
-        System.out.println(cognom_client.length());
-        System.out.println(naixament.length());
-        System.out.println(adreca.length());
-        System.out.println(email.length());
         
         return frase_result;
     }
     
     public static Boolean ExisteixClient (String ubicacio, String client, int contador_clients) throws IOException{
-        System.out.println();
-        System.out.println(client.length());
-        System.out.println();
         boolean existeix = false;
         String client_per_comparar = "";
         for (int i = 0; i < contador_clients; i++){
             client_per_comparar = Utils.Returnar_linea_demanada(ubicacio, i);
-            System.out.println(client_per_comparar.length());
             if (client_per_comparar.equals(client)){
                 existeix = true;
             }
@@ -94,8 +85,33 @@ public class Exercici1 {
         return existeix;
     }
     
-    public static void ConsultaPosicio (int posicio, String ubicacio, int contador_clients){
-        
+    public static void ConsultaPosicio(String ubicacio) throws IOException {
+        int consulta_client = Utils.LlegirInt("Hi han "+Utils.Contador_lineas_ficher(ubicacio)+" clients, quin vols consultar? ");
+        Utils.Mostrar_linea_demanada(ubicacio, consulta_client);
+    }
+    
+    public static void ConsultaCodi (String ubicacio) throws IOException{
+        final int TAMANY_MAX_CODI = 5;
+        Scanner scan = new Scanner (System.in);
+        int client_per_mostrar = 0;
+        Boolean existeix = false;
+        System.out.print("Quin codi vols consultar? ");
+        String codi_consulta = scan.nextLine();
+        codi_consulta = AfegirEspais(TAMANY_MAX_CODI, codi_consulta);
+        for (int i = 0; i < Utils.Contador_lineas_ficher(ubicacio); i++){
+            String client = Utils.Returnar_linea_demanada(ubicacio, i);
+            String codi_comparar = client.substring(0, 6);
+            if (codi_comparar.equals(codi_consulta)){
+                existeix = true;
+                client_per_mostrar = i+1;
+            }
+        }
+        if (existeix){
+            Utils.Mostrar_linea_demanada(ubicacio, client_per_mostrar);
+        }
+        else{
+            System.out.println("No existeix cap client amb el codi demanat.");
+        }
     }
     
 }
