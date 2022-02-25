@@ -246,19 +246,31 @@ public class Utils {
         return contador;
     }
     
-    public static void ModificarFicher(String ubicacio, String frase_per_cambiar, String frase_nova) throws FileNotFoundException{
-        File FicherNou = new File ("./clients_borrador.txt");
-        File FicherAntic = new File (ubicacio);/*
-        try {
-            if (FicherAntic.exists()) {
-                BufferedReader Flee = new BufferedReader(new FileReader(FicherAntic));
-                String linea;
-                while (linea = Flee.readLine()){
-            }
+    public static void EsborrarFicher (File ficher){
+        if (ficher.exists()){
+            ficher.delete();
         }
-        catch{
-            System.out.println(ex.getMessage());
-        }*/
+        else{
+            System.out.println("No es pot esborrar el ficher");
+        }
     }
-// </editor-fold>
+
+    public static void ModificarFicher(String ubicacio, String frase_per_cambiar, String frase_nova) throws FileNotFoundException, IOException {
+        File FicherNou = new File("./clients_borrador.txt");
+        File FicherAntic = new File(ubicacio);
+        if (FicherAntic.exists()) {
+            BufferedReader Flee = new BufferedReader(new FileReader(FicherAntic));
+            String linea;
+            while ((linea = Flee.readLine()) != null) {
+                if (linea.equals(frase_per_cambiar)) {
+                    Escribir_fichero(frase_nova, ubicacio);
+                } else {
+                    Escribir_fichero(linea, ubicacio);
+                }
+            }
+            EsborrarFicher(FicherNou);
+
+        }
+    }
 }
+// </editor-fold>
