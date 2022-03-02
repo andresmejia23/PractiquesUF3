@@ -261,26 +261,43 @@ public class Utils {
         }
     }
 
-    public static void ModificarFicher(String ubicacio, String frase_per_cambiar, String frase_nova) throws FileNotFoundException, IOException {
-        String ubicacio_fichernou = "./clients_borrador.txt";
-        File FicherNou = new File(ubicacio_fichernou);
+    public static void ModificarFicher(String ubicacio, String ubicacio_borrador, String frase_per_cambiar, String frase_nova) throws FileNotFoundException, IOException {
+        File FicherNou = new File(ubicacio_borrador);
         File FicherAntic = new File(ubicacio);
         if (FicherAntic.exists()) {
-            BufferedReader Flee = new BufferedReader(new FileReader(FicherAntic));
+            BufferedReader br = new BufferedReader(new FileReader(FicherAntic));
             String linea;
-            while ((linea = Flee.readLine()) != null) {
+            while ((linea = br.readLine()) != null) {
                 if (linea.equals(frase_per_cambiar)) {
-                    Escribir_fichero(frase_nova, ubicacio_fichernou);
+                    Escribir_fichero(frase_nova, ubicacio_borrador);
                 } else {
-                    Escribir_fichero(linea, ubicacio_fichernou);
+                    Escribir_fichero(linea, ubicacio_borrador);
                 }
             }
             EsborrarFicher(FicherAntic);
             FicherNou.renameTo(FicherAntic);
-            Flee.close();
+            br.close();
+        }
+        else{
+            System.out.println("El ficher no existeix.");
         }
     }
     
-    
+    public static void EsborrarLinea (String ubicacio, String ubicacio_borrador, String linea_esborrar) throws IOException{
+        File FicherNou = new File(ubicacio_borrador);
+        File FicherAntic = new File(ubicacio);
+        if (FicherAntic.exists()){
+            BufferedReader br = new BufferedReader (new FileReader (FicherAntic));
+            String linea;
+            while ((linea = br.readLine()) != null ){
+                if (!linea.equals(linea_esborrar)){
+                    Escribir_fichero (ubicacio_borrador, linea);
+                }
+                else{
+                }
+            }
+            
+        }
+    }
 }
 // </editor-fold>

@@ -21,8 +21,9 @@ public class Exercici1 {
      */
     static Scanner scan  = new Scanner (System.in);
     static final int TAMANY_MAX_CODI = 5, TAMANY_MAX_NOM = 19, TAMANY_MAX_COGNOM = 29, TAMANY_MAX_NAIXAMENT = 7, TAMANY_MAX_ADRECA = 39, TAMANY_MAX_EMAIL = 29;
+    static final String ubicacio_borrador = "./clients_borrador.txt", ubicacio = "./clients.txt";
+    
     public static void main(String[] args) throws IOException { 
-        String ubicacio = "./clients.txt";
         Utils.Mostrar_contenido_fichero(ubicacio);
         String client1 = "", client2 = "", client3 = "";
         String codi = "1", nom_client = "Xavi", cognom_client = "Cabezas", naixament = "23062003", adreca = "Carrer de Cent", email = "xavicabezas@gmail.com";
@@ -153,6 +154,6 @@ public class Exercici1 {
         }
         System.out.println("Introdueix les noves dades del client: ");
         String nou_client = DadesClient();
-        Utils.ModificarFicher(ubicacio, client_modificar, nou_client);
+        Utils.ModificarFicher(ubicacio, ubicacio_borrador, client_modificar, nou_client);
     }
 }
