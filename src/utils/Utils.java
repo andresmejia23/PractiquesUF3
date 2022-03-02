@@ -205,12 +205,18 @@ public class Utils {
         }
     }
     
-    public static void Escribir_fichero (String frase, String ubicacion){
+    public static void Escribir_fichero(String frase, String ubicacion) {
         try {
             FileWriter escritura = new FileWriter(ubicacion, true);
-            escritura.write(10);//Fa un salt de linea.
-            escritura.write(frase);
-            escritura.close();
+            int contador = Contador_lineas_ficher(ubicacion);
+            if (contador == 0) {
+                escritura.write(frase);
+                escritura.close();
+            } else {
+                escritura.write(10);//Fa un salt de linea.
+                escritura.write(frase);
+                escritura.close();
+            }
         } catch (IOException ex) {
             System.out.println("No se ha podido encontrar el archivo");
         }
@@ -256,21 +262,25 @@ public class Utils {
     }
 
     public static void ModificarFicher(String ubicacio, String frase_per_cambiar, String frase_nova) throws FileNotFoundException, IOException {
-        File FicherNou = new File("./clients_borrador.txt");
+        String ubicacio_fichernou = "./clients_borrador.txt";
+        File FicherNou = new File(ubicacio_fichernou);
         File FicherAntic = new File(ubicacio);
         if (FicherAntic.exists()) {
             BufferedReader Flee = new BufferedReader(new FileReader(FicherAntic));
             String linea;
             while ((linea = Flee.readLine()) != null) {
                 if (linea.equals(frase_per_cambiar)) {
-                    Escribir_fichero(frase_nova, ubicacio);
+                    Escribir_fichero(frase_nova, ubicacio_fichernou);
                 } else {
-                    Escribir_fichero(linea, ubicacio);
+                    Escribir_fichero(linea, ubicacio_fichernou);
                 }
             }
-            EsborrarFicher(FicherNou);
-
+            EsborrarFicher(FicherAntic);
+            FicherNou.renameTo(FicherAntic);
+            Flee.close();
         }
     }
+    
+    
 }
 // </editor-fold>

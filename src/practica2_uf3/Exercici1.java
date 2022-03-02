@@ -19,8 +19,9 @@ public class Exercici1 {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException {
-        Scanner scan = new Scanner(System.in);
+    static Scanner scan  = new Scanner (System.in);
+    static final int TAMANY_MAX_CODI = 5, TAMANY_MAX_NOM = 19, TAMANY_MAX_COGNOM = 29, TAMANY_MAX_NAIXAMENT = 7, TAMANY_MAX_ADRECA = 39, TAMANY_MAX_EMAIL = 29;
+    public static void main(String[] args) throws IOException { 
         String ubicacio = "./clients.txt";
         Utils.Mostrar_contenido_fichero(ubicacio);
         String client1 = "", client2 = "", client3 = "";
@@ -40,8 +41,9 @@ public class Exercici1 {
             Utils.Escribir_fichero(client3, ubicacio);
         }
         Utils.Mostrar_contenido_fichero(ubicacio);
-        ConsultaPosicio(ubicacio);
-        ConsultaCodi(ubicacio);
+        /*ConsultaPosicio(ubicacio);
+        ConsultaCodi(ubicacio);*/
+        ModificarClient(ubicacio);
     }
     
     public static String AfegirEspais(int tamanoMax, String missatge) {
@@ -59,7 +61,6 @@ public class Exercici1 {
     }
     
     public static String FraseFinal(String codi, String nom_client, String cognom_client, String naixament, String adreca, String email) {
-        final int TAMANY_MAX_CODI = 5, TAMANY_MAX_NOM = 19, TAMANY_MAX_COGNOM = 29, TAMANY_MAX_NAIXAMENT = 7, TAMANY_MAX_ADRECA = 39, TAMANY_MAX_EMAIL = 29;
         String frase_result = "";
 
         codi = AfegirEspais(TAMANY_MAX_CODI, codi);
@@ -91,8 +92,6 @@ public class Exercici1 {
     }
     
     public static void ConsultaCodi (String ubicacio) throws IOException{
-        final int TAMANY_MAX_CODI = 5;
-        Scanner scan = new Scanner (System.in);
         int client_per_mostrar = 0;
         Boolean existeix = false;
         System.out.print("Quin codi vols consultar? ");
@@ -113,5 +112,47 @@ public class Exercici1 {
             System.out.println("No existeix cap client amb el codi demanat.");
         }
     }
+    public static String DadesClient(){
+        String client = "";
+        System.out.print("Introdueix el codi del client: ");
+        String codi = scan.nextLine();
+        System.out.print("Introdueix el nom del client: ");
+        String nom = scan.nextLine();
+        System.out.print("Introdueix el cognom del client: ");
+        String cognom = scan.nextLine();
+        System.out.print("Introdueix la data de naixament del client (DDMMYYYY): ");
+        String data_naixament = scan.nextLine();
+        System.out.print("Introdueix l'adreça del client: ");
+        String adreca = scan.nextLine();
+        System.out.print("Introdueix el email del client: ");
+        String email = scan.nextLine();
+        client = FraseFinal(codi, nom, cognom, data_naixament, adreca, email);
+        return client;
+    }
     
+    public static void ModificarClient (String ubicacio) throws IOException{
+        int client_per_modificar = 0;
+        String client_modificar = "";
+        Boolean existeix = false;
+        System.out.print("Introdueix el codi del client que vols modificar: ");
+        String codi_consulta = scan.nextLine();
+        codi_consulta = AfegirEspais(TAMANY_MAX_CODI, codi_consulta);
+        for (int i = 0; i < Utils.Contador_lineas_ficher(ubicacio); i++){
+            String client = Utils.Returnar_linea_demanada(ubicacio, i);
+            String codi_comparar = client.substring(0, 6);
+            if (codi_comparar.equals(codi_consulta)){
+                existeix = true;
+                client_per_modificar = i;
+            }
+        }
+        if (existeix){
+            client_modificar = Utils.Returnar_linea_demanada(ubicacio, client_per_modificar);
+        }
+        else{
+            System.out.println("No existeix cap client amb el codi demanat.");
+        }
+        System.out.println("Introdueix les noves dades del client: ");
+        String nou_client = DadesClient();
+        Utils.ModificarFicher(ubicacio, client_modificar, nou_client);
+    }
 }
