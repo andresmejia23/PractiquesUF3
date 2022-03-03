@@ -274,9 +274,9 @@ public class Utils {
                     Escribir_fichero(linea, ubicacio_borrador);
                 }
             }
+            br.close();
             EsborrarFicher(FicherAntic);
             FicherNou.renameTo(FicherAntic);
-            br.close();
         }
         else{
             System.out.println("El ficher no existeix.");
@@ -291,14 +291,14 @@ public class Utils {
             String linea;
             while ((linea = br.readLine()) != null ){
                 if (!linea.equals(linea_esborrar)){
-                    Escribir_fichero (ubicacio_borrador, linea);
+                    Escribir_fichero (linea, ubicacio_borrador);
                 }
                 else{
                 }
             }
-            EsborrarFicher (FicherAntic);
-            FicherNou.renameTo(FicherAntic);
             br.close();
+            EsborrarFicher(FicherAntic);
+            FicherNou.renameTo(FicherAntic);
         }
         else{
             System.out.print("No existeix el ficher.");
