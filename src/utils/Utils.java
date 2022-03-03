@@ -296,7 +296,12 @@ public class Utils {
                 else{
                 }
             }
-            
+            EsborrarFicher (FicherAntic);
+            FicherNou.renameTo(FicherAntic);
+            br.close();
+        }
+        else{
+            System.out.print("No existeix el ficher.");
         }
     }
 }

@@ -43,8 +43,10 @@ public class Exercici1 {
         }
         Utils.Mostrar_contenido_fichero(ubicacio);
         /*ConsultaPosicio(ubicacio);
-        ConsultaCodi(ubicacio);*/
-        ModificarClient(ubicacio);
+        ConsultaCodi(ubicacio);
+        ModificarClient(ubicacio);*/
+        EsborrarClient(ubicacio);
+        Utils.Mostrar_contenido_fichero(ubicacio);
     }
     
     public static String AfegirEspais(int tamanoMax, String missatge) {
@@ -148,12 +150,37 @@ public class Exercici1 {
         }
         if (existeix){
             client_modificar = Utils.Returnar_linea_demanada(ubicacio, client_per_modificar);
+            System.out.println("Introdueix les noves dades del client: ");
+            String nou_client = DadesClient();
+            Utils.ModificarFicher(ubicacio, ubicacio_borrador, client_modificar, nou_client);
         }
         else{
             System.out.println("No existeix cap client amb el codi demanat.");
         }
-        System.out.println("Introdueix les noves dades del client: ");
-        String nou_client = DadesClient();
-        Utils.ModificarFicher(ubicacio, ubicacio_borrador, client_modificar, nou_client);
+    }
+    
+    public static void EsborrarClient (String ubicacio) throws IOException{
+        int client_per_modificar = 0;
+        String client_esborrar = "";
+        Boolean existeix = false;
+        System.out.print("Introdueix el codi del client que vols esborrar: ");
+        String codi_consulta = scan.nextLine();
+        codi_consulta = AfegirEspais(TAMANY_MAX_CODI, codi_consulta);
+        for (int i = 0; i < Utils.Contador_lineas_ficher(ubicacio); i++){
+            String client = Utils.Returnar_linea_demanada(ubicacio, i);
+            String codi_comparar = client.substring(0, 6);
+            if (codi_comparar.equals(codi_consulta)){
+                existeix = true;
+                client_per_modificar = i;
+            }
+        }
+        if (existeix){
+            client_esborrar = Utils.Returnar_linea_demanada(ubicacio, client_per_modificar);
+            Utils.EsborrarLinea(ubicacio, ubicacio_borrador, client_esborrar);
+            System.out.println("S'ha esborrar el client correctament.");
+        }
+        else{
+            System.out.println("No existeix cap client amb el codi demanat.");
+        }
     }
 }
